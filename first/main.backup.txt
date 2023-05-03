@@ -1,0 +1,227 @@
+#if 0
+#include <stdio.h>
+#include <malloc.h>
+typedef struct train Train;
+struct train {
+	int seats;
+	struct train* next;
+};
+int main() {
+	Train* head = NULL;
+	Train* tail = NULL;
+	int i;
+	for (i = 0; i < 500000; i++) {
+		if (head == NULL) {
+			head = tail = (Train*)malloc(sizeof(Train));
+		}
+		else {
+			tail->next = (Train*)malloc(sizeof(Train));
+			tail = tail->next;
+		}
+		tail->seats = i;
+	}
+	printf("1\n");
+	train* curr = NULL;
+	for (curr = head; curr != tail; curr = curr->next) {
+		printf("%d->", curr->seats);
+	}
+	printf("%d", curr->seats);
+	return 0;
+}
+#endif
+#if 0
+#include <stdio.h>
+union student {
+	int num;
+	double grade;
+};
+int main() {
+	union student s1 = { 315 };
+	printf("학번 : %d\n", s1.num);
+	s1.grade = 4.4;
+	printf("학점 : %.1lf\n", s1.grade);
+	printf("학번 : %d\n", s1.num);
+	return 0;
+}
+#endif
+#if 0
+#include <stdio.h>
+enum season{spring,summer,fall,winter};
+int main() {
+	enum season ss;
+	const char* pc = NULL;
+	ss = spring;
+	switch (ss) {
+	case spring:
+		pc = "inline"; break;
+	case summer:
+		pc = "swimming"; break;
+	case fall:
+		pc = "trip"; break;
+	case winter:
+		pc = "skiing"; break;
+	}
+	printf("나의 레저 활동=> %s\n", pc);
+	return 0;
+}
+#endif
+#if 0
+#include <stdio.h>
+struct student {
+	int num;
+	double grade;
+};
+typedef struct student Student;
+void print_data(Student* pa);
+int main() {
+	Student s1 = { 315,4.2 };
+	print_data(&s1);
+	return 0;
+}
+void print_data(Student* ps) {
+	printf("학번 : %d\n", ps->num);
+	printf("학점 : %.1lf\n", ps->grade);
+}
+#endif
+#if 0
+#include <stdio.h>
+int main(void) {
+	FILE* fp = fopen("test.txt", "w");
+	for (int i = 0; i < 100; i++) { fprintf(fp, "%d ", i);
+	}
+	fclose(fp);
+	fp = fopen("test.txt", "r");
+	int data = 0;
+	for (int i = 0; i < 100; i++) {
+		fscanf(fp, "%d ", &data); printf("%d ", data);
+	}
+	fclose(fp);
+}
+#endif
+#if 0
+#include <stdio.h>
+int main() {
+	FILE* fp;
+	int ch;
+	fp = fopen("test.txt", "r");
+	if (fp == NULL) {
+		printf("파일이 열리지 않았습니다.\n");
+		return 1;
+	}
+	while (1) {
+		ch = fgetc(fp);
+		if (ch == EOF) {
+			break;
+		}
+		putchar(ch);
+	}
+	fclose(fp);
+	return 0;
+}
+#endif
+#if 0
+#include <stdio.h>
+int main() {
+	FILE* fp;
+	char str[] = "banana";
+	int i;
+	fp = fopen("test.txt", "w");
+	if (fp == NULL) {
+		printf("파일을 만들지 못했습니다.\n");
+		return 1;
+	}
+	i = 0;
+	while (str[i] != '\0') {
+		fputc(str[i], fp);
+		i++;
+	}
+	fputc('\n', fp);
+	fclose(fp);
+	return 0;
+}
+#endif
+#if 0
+#include <stdio.h>
+int main() {
+	int ch;
+	while (1) {
+		ch = fgetc(stdin);
+		if (ch == EOF) {
+			break;
+		}
+		fputc(ch, stdout);
+	}
+	return 0;
+}
+#endif
+#if 0
+#include <stdio.h>
+int main() {
+	FILE* fp;
+	int ary[10] = { 13,10,13,13,10,26,13,10,13,10 };
+	int i, res;
+	fp = fopen("test.txt", "wb");
+	for (i = 0; i < 10; i++); {
+		fputc(ary[i], fp);
+	}
+	fclose(fp);
+	fp = fopen("test.txt", "rt");
+	while (1) {
+		res = fgetc(fp);
+		if (res == EOF) break;
+		printf("%4d", res);
+	}
+	fclose(fp);
+	return 0;
+}
+#endif
+#if 1
+#include <stdio.h>
+int main(int argc, char** argv) {
+	char* sname = argv[1];
+	char* dname = argv[2];
+	FILE* sfile = fopen(sname, "rb");
+	FILE* dfile = fopen(dname, "wb");
+	char buffer[1];
+	while (1) {
+		if (fread(buffer, sizeof(buffer), 1, sfile) == 0) break;
+		fwrite(buffer, sizeof(buffer), 1, dfile);
+	}
+	fclose(sfile);
+	fclose(dfile);
+}
+#endif
+#if 0
+#include <stdio.h>
+#include <string.h>
+int main() {
+	FILE* fp;
+	char str[20];
+	fp = fopen("test.txt", "a+");
+	if (fp == NULL) {
+		printf("파일을 만들지 못했습니다.\n");
+		return 1;
+	}
+	while (1) {
+		printf("과일 이름 : ");
+		scanf("%s", str);
+		if (strcmp(str, "end") == 0) {
+			break;
+		}
+		else if (strcmp(str, "list") == 0) {
+			fseek(fp, 0, SEEK_SET);
+			while (1) {
+				fgets(str, sizeof(str), fp);
+				if (feof(fp)) {
+					break;
+				}
+				printf("%s", str);
+			}
+		}
+		else { fprintf(fp, "%s\n", str); 
+		}
+	}
+	fclose(fp);
+	return 0;
+}
+#endif
